@@ -1,18 +1,21 @@
 How to use this:
-1.  Create a new stack with `struct stack *stack = stack_new(el_size, print)`
+1.  Create a new stack with `Stack stack = stack_new(el_size, print)`
     The arguments are:
-     a) el_size -- size of element pointer ex: sizeof(struct elem *)
+     a) el_size -- size of each element ex: sizeof(struct elem)
      b) print -- print function of signature `void print(void *elem)`
         which prints an element of the stack
-    Returns the pointer to new stack
 
-2.  To push to stack,  `stack->methods->push(stack, elem)`
-    note: elem is pointer to element NOT element itself
+2.  To push to stack,  `stack_push(stack, &elem)`
+    Second argument is pointer to the element
+    ex: struct elem elem = { ... };
 
-3.  To pop from stack, `struct elem *elem = stack->methods->pop(stack)`
+3.  To pop from stack, `struct elem *elem = stack_pop(stack)`
         Returns pointer to popped element
 
-4.  To print the elements, `stack->methods->print(stack)`
+4.  To print the elements, `stack_print(stack)`
         Prints elements from bottom to top
 
-5.  To delete stack, `stack_remove(stack)`
+5.  To delete stack, `stack_delete(stack)`
+
+6.  To check if stack is empty `stack_is_empty(stack)`
+    Returns true or false

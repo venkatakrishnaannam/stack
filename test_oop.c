@@ -6,35 +6,40 @@
 struct delem {
 	int idata;
 	float data;
-	struct delem *next;
+	long ldata;
 };
 
-struct delem *new_delem(float f)
+struct delem new_delem(float f)
 {
-	struct delem *elem = malloc(sizeof (struct delem));
-	elem->idata = (int)f;
-	elem->data = f;
-	elem->next = NULL;
+	struct delem elem = {
+		.idata = (int)f,
+		.data = f,
+		.ldata = 2*f
+	};
 	return elem;
 }
 
 void print(void *delem)
 {
 	struct delem *elem = delem;
-	printf("-> %d %.2f ", elem->idata, elem->data);
+	printf("-> %d %.2f %ld ", elem->idata, elem->data, elem->ldata);
 }
 
 int main()
 {
-	struct stack *stack = stack_new(sizeof(struct delem *), print);
-	for (float i = 5; i < 7; i += 0.25) {
-		struct delem *elem = new_delem(i);
-		stack->methods->push(stack, elem);
+	Stack stack = stack_new(sizeof(struct delem), print);
+	for (float i = 5; i < 7.25; i += 0.25) {
+		struct delem elem = new_delem(i);
+		stack_push(stack, &elem);
 	}
-	stack->methods->print(stack);
-	print(stack->methods->pop(stack));
-	print(stack->methods->pop(stack));
-	stack->methods->print(stack);
+	stack_print(stack);
+	stack_pop(stack);
+	stack_pop(stack);
+	stack_pop(stack);
+	stack_print(stack);
+	stack_pop(stack);
+	stack_pop(stack);
+	stack_print(stack);
 	stack_delete(stack);
 	return 0;
 }
