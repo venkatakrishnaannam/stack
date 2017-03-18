@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "stack_oop.h"
+#include "stack.h"
 
 static void stack_init(Stack this, size_t elem_size, void (*print_elem)(void *))
 {
@@ -55,7 +55,7 @@ void *stack_pop(Stack this)
 	return top;
 }
 
-bool stack_is_empty(Stack this)
+inline bool stack_is_empty(Stack this)
 {
 	return this->length == 0;
 }
